@@ -292,12 +292,12 @@ O script executa o fluxo real contra o sistema e mostra o resultado de cada veri
 ```
 === Verificação — Iteração 1 (registro de pedido online) ===
 
-✅ PASSOU  US01 (crit. 1 e 2) — senha exibida corresponde a pedido gravado (5/5 execuções)
-✅ PASSOU  RN-001 — mesma sessão enviada 2x gera um único pedido
-✅ PASSOU  RN-004 — falha simulada não emite senha nem deixa pedido gravado
-✅ PASSOU  RN-006 — pedido vazio e quantidade zero são bloqueados
-✅ PASSOU  RN-007 — item sem unidade de medida é bloqueado
-✅ PASSOU  RNF-001 — 95% dos 30 registros em até 2 s
+PASSOU  US01 (crit. 1 e 2) — senha exibida corresponde a pedido gravado (5/5 execuções)
+PASSOU  RN-001 — mesma sessão enviada 2x gera um único pedido
+PASSOU  RN-004 — falha simulada não emite senha nem deixa pedido gravado
+PASSOU  RN-006 — pedido vazio e quantidade zero são bloqueados
+PASSOU  RN-007 — item sem unidade de medida é bloqueado
+PASSOU  RNF-001 — 95% dos 30 registros em até 2 s
 
 Todas as verificações passaram.
 ```
@@ -344,7 +344,7 @@ docker compose down -v
 
 Registre o resultado de cada item. As linhas correspondem à Matriz de Verificação e Aceitação da Iteração 1 (Documento de Requisitos, Seção 2.2).
 
-| # | Requisito | Teste | Resultado esperado | ✅ / ❌ | Observações |
+| # | Requisito | Teste | Resultado esperado | PASSOU / FALHOU | Observações |
 |---|---|---|---|---|---|
 | 1 | US01 (crit. 1 e 2) | Teste 1 e Teste 2 | Senha exibida corresponde a pedido gravado no banco | | |
 | 2 | US01 (crit. 1 e 2) | Script (4.8) | 5/5 execuções corretas | | |
@@ -354,7 +354,7 @@ Registre o resultado de cada item. As linhas correspondem à Matriz de Verifica�
 | 6 | RN-007 | Teste 5 e Script (4.8) | Item sem unidade bloqueado | | |
 | 7 | RNF-001 | Script (4.8) | ≥ 95% dos 30 registros em até 2 s | | |
 
-**Condição de conclusão da Iteração 1:** todos os itens acima marcados com ✅ e as evidências (prints do Teste 2, relatório e CSV) anexadas ao relatório de testes de aceitação.
+**Condição de conclusão da Iteração 1:** todos os itens acima marcados como PASSOU e as evidências (prints do Teste 2, relatório e CSV) anexadas ao relatório de testes de aceitação.
 
 ---
 
