@@ -90,3 +90,13 @@ button:disabled {
   color: #8b1e2d;
   margin: 24px 0;
 }
+
+.quantidade input {
+  width: 120px;
+  min-height: 56px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-align: center;
+  border: 2px solid #8b1e2d;
+  border-radius: 12px;
+}
