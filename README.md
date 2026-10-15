@@ -1,6 +1,6 @@
 # Ao Ponto — Iteração 1: Registro de pedido (modo online)
 
-Sistema inteligente de pedidos para açougues, desenvolvido como projeto acadêmico (UCB, 2026 — Grupo 4: Cauã Assunção, Cássio Araújo e Gustavo Lima).
+Sistema inteligente de pedidos para açougues, desenvolvido como projeto acadêmico (Soluções Computacionais - UCB, 2026/2 — Grupo 3: Cássio Araújo e Gustavo Lima).
 
 Este documento explica **o que foi entregue na Iteração 1**, **como o sistema funciona** e, principalmente, **como testar passo a passo**, sem precisar saber programar.
 
