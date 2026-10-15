@@ -2,7 +2,7 @@
 
 Sistema inteligente de pedidos para açougues, desenvolvido como projeto acadêmico (Soluções Computacionais - UCB, 2026/2 — Grupo 3: Cássio Araújo e Gustavo Lima).
 
-Este documento explica **o que foi entregue na Iteração 1**, **como o sistema funciona** e, principalmente, **como testar passo a passo**, sem precisar saber programar.
+Este documento descreve **o que foi entregue na Iteração 1**, **como o sistema funciona** e **como testá-lo passo a passo**.
 
 ---
 
@@ -11,10 +11,10 @@ Este documento explica **o que foi entregue na Iteração 1**, **como o sistema 
 1. [O que é o Ao Ponto](#1-o-que-é-o-ao-ponto)
 2. [O que esta iteração entrega (e o que não entrega)](#2-o-que-esta-iteração-entrega-e-o-que-não-entrega)
 3. [Como o sistema funciona](#3-como-o-sistema-funciona)
-4. [Guia de teste para o Product Owner](#4-guia-de-teste-para-o-product-owner)
-5. [Checklist de aceitação (para preencher)](#5-checklist-de-aceitação-para-preencher)
+4. [Guia de teste](#4-guia-de-teste)
+5. [Checklist de aceitação](#5-checklist-de-aceitação)
 6. [Problemas comuns](#6-problemas-comuns)
-7. [Informações técnicas (para a equipe de desenvolvimento)](#7-informações-técnicas-para-a-equipe-de-desenvolvimento)
+7. [Informações técnicas](#7-informações-técnicas)
 
 ---
 
@@ -75,14 +75,14 @@ Picanha, Alcatra, Fraldinha, Contrafilé, Coxão mole, Patinho, Maminha, Acém, 
 
 ## 3. Como o sistema funciona
 
-### 3.1 As três peças
+### 3.1 Componentes
 
-O sistema roda em três "caixinhas" (chamadas **containers**), que sobem juntas com um único comando:
+O sistema é composto por três containers Docker, iniciados juntos com um único comando:
 
-| Peça | Para que serve | Onde acessar |
+| Componente | Função | Endereço |
 |---|---|---|
-| **Frontend** (tela do totem) | O que o cliente vê e toca. Feito em React. | http://localhost:5173 |
-| **Backend** (servidor / API) | Recebe o pedido, aplica as regras e grava. Feito em Node.js. | http://localhost:3000 |
+| **Frontend** (tela do totem) | Interface com o cliente. React. | http://localhost:5173 |
+| **Backend** (servidor / API) | Recebe o pedido, aplica as regras e grava. Node.js. | http://localhost:3000 |
 | **Banco de dados** | Guarda cortes, pedidos e senhas. PostgreSQL. | (interno) |
 
 ### 3.2 O caminho de um pedido
@@ -124,20 +124,20 @@ Pontos importantes:
 
 ---
 
-## 4. Guia de teste para o Product Owner
+## 4. Guia de teste
 
-Tempo estimado: **30 a 40 minutos** (a primeira instalação pode demorar mais por causa dos downloads).
+Tempo estimado: **30 a 40 minutos** (a primeira execução pode demorar mais por causa dos downloads).
 
-### 4.1 O que você precisa
+### 4.1 Pré-requisitos
 
-- Um computador com **Windows 10/11**, **macOS** ou **Linux**.
+- Computador com **Windows 10/11**, **macOS** ou **Linux**.
 - Navegador **Google Chrome** ou **Microsoft Edge**.
-- Conexão com a internet (apenas na primeira vez, para baixar os componentes).
-- O programa **Docker Desktop** (explicado abaixo).
+- Conexão com a internet (apenas na primeira execução, para baixar as imagens do Docker).
+- **Docker Desktop** instalado (passo a seguir).
 
 ### 4.2 Passo 1 — Instalar o Docker Desktop
 
-O Docker é o programa que "empacota" o sistema para ele funcionar igual em qualquer computador, sem instalar banco de dados, Node.js etc. separadamente.
+O sistema roda em containers Docker, então não é necessário instalar Node.js nem PostgreSQL separadamente.
 
 1. Acesse https://www.docker.com/products/docker-desktop/ e baixe a versão para o seu sistema.
 2. Execute o instalador e aceite as opções padrão. No Windows, mantenha marcada a opção de usar o **WSL 2**.
@@ -150,31 +150,29 @@ O Docker é o programa que "empacota" o sistema para ele funcionar igual em qual
 
 Escolha **uma** das opções:
 
-- **Sem instalar nada extra (recomendado):** na página do repositório no GitHub, clique no botão verde **Code → Download ZIP**. Extraia o arquivo para uma pasta (ex.: `Documentos\ao-ponto`).
+- **Download direto:** na página do repositório no GitHub, clique no botão verde **Code → Download ZIP**. Extraia o arquivo para uma pasta (ex.: `Documentos\ao-ponto`).
 - **Com Git:** `git clone <url-do-repositorio>`
 
 Dentro da pasta extraída deve existir um arquivo chamado `docker-compose.yml`. É nessa pasta que os comandos a seguir devem ser executados.
 
 ### 4.4 Passo 3 — Abrir o terminal na pasta do projeto
 
-O **terminal** é uma janela onde se digitam comandos.
-
-- **Windows:** abra a pasta do projeto no Explorador de Arquivos, clique na **barra de endereço** (onde aparece o caminho da pasta), digite `powershell` e tecle **Enter**. Uma janela azul/preta abrirá já na pasta correta.
+- **Windows:** abra a pasta do projeto no Explorador de Arquivos, clique na **barra de endereço** (onde aparece o caminho da pasta), digite `powershell` e tecle **Enter**. O terminal abrirá já na pasta correta.
 - **macOS:** abra o app **Terminal**, digite `cd ` (com espaço), arraste a pasta do projeto para dentro da janela e tecle Enter.
 
-### 4.5 Passo 4 — Ligar o sistema
+### 4.5 Passo 4 — Iniciar o sistema
 
-No terminal, digite (ou cole) e tecle Enter:
+No terminal, execute:
 
 ```bash
 docker compose up --build
 ```
 
-- Na primeira vez, aguarde alguns minutos: o Docker baixa e prepara tudo. Vão aparecer muitas linhas de texto. **Isso é normal.**
-- O sistema está pronto quando aparecerem, entre as linhas, mensagens como:
+- Na primeira execução, aguarde alguns minutos enquanto o Docker baixa e prepara tudo. Vão aparecer muitas linhas de log. Isso é normal.
+- O sistema está pronto quando aparecerem mensagens como:
   - `API ouvindo na porta 3000`
   - `Local: http://localhost:5173/`
-- **Não feche essa janela do terminal** enquanto estiver testando. Ela é o "motor" do sistema.
+- **Mantenha esse terminal aberto** durante os testes: é ele que mantém o sistema em execução.
 
 Para conferir, abra no navegador **http://localhost:3000/api/saude**. Deve aparecer: `{"status":"ok"}`.
 
@@ -188,7 +186,7 @@ Você deve ver a tela "Monte seu pedido" com a lista de cortes.
 
 ### 4.7 Testes manuais (pela tela)
 
-Para cada teste há o que fazer e o que deve acontecer. Anote o resultado na [checklist](#5-checklist-de-aceitação-para-preencher).
+Cada teste indica o que fazer e o que deve acontecer. Registre o resultado na [checklist](#5-checklist-de-aceitação).
 
 #### Teste 1 — Registrar um pedido com sucesso *(US01, critérios 1 e 2)*
 
@@ -202,13 +200,13 @@ Para cada teste há o que fazer e o que deve acontecer. Anote o resultado na [ch
 
 #### Teste 2 — Conferir que o pedido foi gravado *(US01 e RN-004)*
 
-Como ainda não existe tela de funcionário, conferimos direto no banco de dados. Em um **novo terminal** (deixe o primeiro aberto, rodando), na mesma pasta do projeto, execute:
+Como ainda não existe tela de funcionário, a conferência é feita diretamente no banco de dados. Em um **novo terminal** (mantenha o primeiro aberto), na mesma pasta do projeto, execute:
 
 ```bash
 docker compose exec db psql -U aoponto -d aoponto -c "SELECT s.serie || '-' || lpad(s.numero::text, 3, '0') AS senha, c.nome AS corte, i.quantidade, i.unidade, p.status FROM senha_atendimento s JOIN pedido p ON p.id = s.pedido_id JOIN item_pedido i ON i.pedido_id = p.id JOIN corte c ON c.id = i.corte_id ORDER BY s.numero DESC LIMIT 5;"
 ```
 
-**Resultado esperado:** uma tabela com o pedido que você acabou de fazer, com a **mesma senha** que apareceu na tela:
+**Resultado esperado:** uma tabela com o pedido que acabou de ser feito, com a **mesma senha** que apareceu na tela:
 
 ```
  senha |      corte       | quantidade | unidade | status
@@ -277,13 +275,13 @@ Este teste simula uma queda do banco de dados.
    Aguarde cerca de 10 segundos.
 5. Toque novamente em **Confirmar pedido** (sem alterar nada).
 
-   **Resultado esperado:** agora o pedido é registrado e a senha aparece, e **só existe um pedido** no banco para essa sessão. Você pode repetir o comando do Teste 2 para conferir.
+   **Resultado esperado:** agora o pedido é registrado e a senha aparece, e **só existe um pedido** no banco para essa sessão. Repita o comando do Teste 2 para conferir.
 
 ---
 
 ### 4.8 Teste automático (cobre várias regras de uma vez)
 
-Alguns critérios exigem repetição ou medição de tempo, o que é impraticável à mão. Para isso existe um script de verificação. Em um terminal na pasta do projeto, execute:
+Alguns critérios exigem repetição ou medição de tempo, o que é impraticável manualmente. Para isso existe um script de verificação. Em um terminal na pasta do projeto, execute:
 
 ```bash
 docker compose exec backend sh -c "npm run verificar | tee evidencias/iteracao1-relatorio.txt"
@@ -294,12 +292,12 @@ O script executa o fluxo real contra o sistema e mostra o resultado de cada veri
 ```
 === Verificação — Iteração 1 (registro de pedido online) ===
 
-PASSOU  US01 (crit. 1 e 2) — senha exibida corresponde a pedido gravado (5/5 execuções)
-PASSOU  RN-001 — mesma sessão enviada 2x gera um único pedido
-PASSOU  RN-004 — falha simulada não emite senha nem deixa pedido gravado
-PASSOU  RN-006 — pedido vazio e quantidade zero são bloqueados
-PASSOU  RN-007 — item sem unidade de medida é bloqueado
-PASSOU  RNF-001 — 95% dos 30 registros em até 2 s
+✅ PASSOU  US01 (crit. 1 e 2) — senha exibida corresponde a pedido gravado (5/5 execuções)
+✅ PASSOU  RN-001 — mesma sessão enviada 2x gera um único pedido
+✅ PASSOU  RN-004 — falha simulada não emite senha nem deixa pedido gravado
+✅ PASSOU  RN-006 — pedido vazio e quantidade zero são bloqueados
+✅ PASSOU  RN-007 — item sem unidade de medida é bloqueado
+✅ PASSOU  RNF-001 — 95% dos 30 registros em até 2 s
 
 Todas as verificações passaram.
 ```
@@ -326,7 +324,7 @@ O que cada linha comprova:
 
 ---
 
-### 4.9 Desligar o sistema
+### 4.9 Encerrar o sistema
 
 No terminal onde o sistema está rodando, tecle **Ctrl + C**. Depois execute:
 
@@ -334,7 +332,7 @@ No terminal onde o sistema está rodando, tecle **Ctrl + C**. Depois execute:
 docker compose down
 ```
 
-Os pedidos de teste continuam guardados para a próxima vez. Para **apagar tudo e começar do zero** (banco limpo e senhas voltando para `A-001`):
+Os pedidos de teste continuam guardados para a próxima execução. Para **apagar tudo e começar do zero** (banco limpo e senhas voltando para `A-001`):
 
 ```bash
 docker compose down -v
@@ -342,9 +340,9 @@ docker compose down -v
 
 ---
 
-## 5. Checklist de aceitação (para preencher)
+## 5. Checklist de aceitação
 
-Marque o resultado de cada item. As linhas correspondem à Matriz de Verificação e Aceitação da Iteração 1 (Documento de Requisitos, Seção 2.2).
+Registre o resultado de cada item. As linhas correspondem à Matriz de Verificação e Aceitação da Iteração 1 (Documento de Requisitos, Seção 2.2).
 
 | # | Requisito | Teste | Resultado esperado | ✅ / ❌ | Observações |
 |---|---|---|---|---|---|
@@ -365,16 +363,16 @@ Marque o resultado de cada item. As linhas correspondem à Matriz de Verificaç�
 | Sintoma | O que fazer |
 |---|---|
 | `docker: command not found` ou "Cannot connect to the Docker daemon" | O Docker Desktop não está aberto. Abra-o e aguarde "Engine running". |
-| Erro de porta em uso (`port is already allocated`) | Outro programa usa a porta 3000, 5173 ou 5432. Feche-o, ou peça à equipe para alterar a porta no `docker-compose.yml`. |
+| Erro de porta em uso (`port is already allocated`) | Outro programa usa a porta 3000, 5173 ou 5432. Feche-o ou altere o mapeamento de portas no `docker-compose.yml`. |
 | A página http://localhost:5173 não abre | Aguarde 1 a 2 minutos após o comando de subir. Confira se o terminal mostra `Local: http://localhost:5173/`. |
-| A página abre, mas a lista de cortes não aparece | Veja se http://localhost:3000/api/saude responde `{"status":"ok"}`. Se não, execute `docker compose logs backend` e envie o resultado à equipe. |
+| A página abre, mas a lista de cortes não aparece | Veja se http://localhost:3000/api/saude responde `{"status":"ok"}`. Se não, execute `docker compose logs backend` e verifique a mensagem de erro. |
 | Depois do Teste 6, o pedido continua dando erro | Aguarde mais alguns segundos após `docker compose start db` e tente de novo. Se persistir: `docker compose restart backend`. |
 | Quero recomeçar do zero | `docker compose down -v` e depois `docker compose up --build`. |
 | Quero ver o que o sistema está registrando | `docker compose logs -f backend` (Ctrl + C para sair). |
 
 ---
 
-## 7. Informações técnicas (para a equipe de desenvolvimento)
+## 7. Informações técnicas
 
 ### 7.1 Tecnologias
 
