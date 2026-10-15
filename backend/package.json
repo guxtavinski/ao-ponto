@@ -1,0 +1,14 @@
+{
+  "name": "ao-ponto-backend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "verificar": "node scripts/verificar-iteracao1.mjs"
+  },
+  "dependencies": {
+    "express": "5.1.0",
+    "pg": "^8.16.0"
+  }
+}
